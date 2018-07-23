@@ -2,7 +2,7 @@ var config ={
   host : 'localhost',
   user : 'root',
   password : '',
-  database : 'geolocation'
+  database : 'Geolocation'
 };
 
 module.exports = config;
