@@ -5,18 +5,23 @@ div(class="container-fluid")
       span(class="icon-bar")
       span(class="icon-bar")
       span(class="icon-bar")
-    a(class="navbar-brand" href="")= 'Geolocalization'
+    if !isAuthenticated
+      a(class="navbar-brand" href="/user/logIn")= 'Geolocalization'
+    else
+      a(class="navbar-brand" href="/")= 'Geolocalization'
     
   div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")     
     ul(class="nav navbar-nav navbar-right")
-      li
-        a(href="/user/signup")= 'Sign up'
-      li
-        a(href="/user/logIn")= 'Log in'
-      li(class="dropdown")
-        a(href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")= 'User\'s name'
-          span(class="caret")
-        ul(class="dropdown-menu")
-          li
-            a(href="")= 'Sign off'
+      if !isAuthenticated
+        li
+          a(href="/user/signup")= 'Sign up'
+        li
+          a(href="/user/logIn")= 'Log in'
+      else
+        li(class="dropdown")
+          a(href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")= user.nombre
+            span(class="caret")
+          ul(class="dropdown-menu")
+            li
+              a(href="/user/logout")= 'Log out'
     

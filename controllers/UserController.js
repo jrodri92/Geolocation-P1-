@@ -36,5 +36,10 @@ module.exports = {
 
   getLogIn: function(req,res,next){
     return res.render('users/logIn', {message: req.flash('info'), automessage: req.flash('automessage')});
+  },
+
+  getLogOut: function(req,res,next){
+    req.logout();
+    res.redirect('/user/logIn');
   }
 };
