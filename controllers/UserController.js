@@ -13,7 +13,7 @@ module.exports = {
     
     var user = {
       email : req.body.email,
-      name : req.body.name,
+      nombre : req.body.name,
       password : password
     };
     
@@ -22,14 +22,19 @@ module.exports = {
     var db = mysql.createConnection(config);
 
     db.connect();
+    
 
-    db.query('INSERT users SET ?', user, function(err, rows, fields){
+    db.query('INSERT INTO users SET ?', user, function(err, rows, fields){
       if(err) throw err;
       
       db.end();
     });
+    req.flash('info','you have successfully registered');
+    return res.render('users/logIn', {message: req.flash('info'), automessage: req.flash('automessage')});
 
-    return;
+  },
 
+  getLogIn: function(req,res,next){
+    return res.render('users/logIn', {message: req.flash('info'), automessage: req.flash('automessage')});
   }
 };
