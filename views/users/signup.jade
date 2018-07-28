@@ -6,13 +6,13 @@ block content
       div(class='panel panel-default')
         div(class='panel-heading')= 'Sign up'
         div(class='panel-body')
-          form(action='/user/signup' method='post' autocomplete='off')
+          form(action='/user/signup' method='post')
             div(class='form-group')
               label(for="email")= 'Email'
-              input(type='email' name='email' id='email' placeholder='Email' class='form-control')
+              input(type='email' name='email' id='email' placeholder='email' class='form-control')
             div(class='form-group')
               label(for="nombre")= 'Name'
-              input(type='text' name='name' id='name' placeholder='Name' class='form-control')
+              input(type='text' name='name' id='name' placeholder='name' class='form-control')
             div(class='form-group')
               label(for="password")= 'Password'
               input(type='password' name='password' id='password' placeholder='Password' class='form-control')

@@ -1,6 +1,49 @@
 extends templates/default
 
 block content
-  h1= 'Pagina de inicio'
-  if isAuthenticated
-    p= 'Bienvenido ' + user.nombre
+  script.
+    var ciclo;
+    function getLocation() {
+      if (navigator.geolocation) {
+        console.log(navigator.geolocatio);
+        navigator.geolocation.watchPosition(showPosition);
+      } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+    }
+    function showPosition(position) {
+      var x = document.getElementById("demo");
+      x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+      document.getElementById("latitude").value = position.coords.latitude;
+      document.getElementById("longitude").value = position.coords.longitude;
+      guardar();
+    }
+    function iniciar() {
+      //ciclo = setInterval(getLocation, 1000);
+      getLocation();
+      document.getElementById("record").disabled = true;
+      document.getElementById("stop").disabled = false;
+    }
+    function parar() {
+      clearInterval(ciclo);
+      document.getElementById("record").disabled = false;
+      document.getElementById("stop").disabled = true;
+    }
+    function guardar() {
+      document.form.latitude.value;
+      document.form.longitude.value;
+      form.userid.value;
+      document.form.submit();
+    }
+
+  h2= "Agregar Ubicación, " + user.name
+
+  p(name = 'demo' id='demo') hola
+  
+  form(method="post" action="/" id="form" name='form')
+    input(class="form-control" name="userid" placeholder="userid" id="userid" value= user.id)
+    input("latitude" class="form-control" name="latitude" placeholder="latitude" id="latitude")
+    input(class="form-control" name="longitude" placeholder="longitude" id="longitude")
+
+  button(id="record" onclick='iniciar()' name="record") record
+  button(id="stop" onclick="parar()" name= "stop") stop
