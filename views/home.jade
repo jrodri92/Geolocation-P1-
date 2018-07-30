@@ -46,10 +46,17 @@ block content
     }
   div#contenedor
     h2= "Agregar Ubicación"
+    p(name = 'demo' id='demo')
+    
+    form(method="post" action="/" id="form" name='form')
+      input(class="form-control" name="userid" placeholder="userid" id="userid" value= user.id type="hidden")
+      input("latitude" class="form-control" name="latitude" placeholder="latitude" id="latitude" type="hidden")
+      input(class="form-control" name="longitude" placeholder="longitude" id="longitude" type="hidden")
+
+    button(id="record" onclick='iniciar()' name="record") add location
+    button(id="stop" onclick="parar()" name= "clear") show map
+
     div(id="mapa")
-    p(name = 'demo1' id='demo1')
-    div(id="lista1" value='3')
-    div(id="lista2" value='4')
 
     style. type="text/css">
       #mapa {
@@ -66,8 +73,8 @@ block content
             ['León', document.form.latitude.value,form.longitude.value]
           ];
           var map = new google.maps.Map(document.getElementById('mapa'), {
-            zoom: 7,
-            center: new google.maps.LatLng(8, -75),
+            zoom: 15,
+            center: new google.maps.LatLng(marcadores[0][1], marcadores[0][2]),
             mapTypeId: google.maps.MapTypeId.ROADMAP
           });
           var infowindow = new google.maps.InfoWindow();
@@ -88,14 +95,5 @@ block content
         a = false;
       }
       if(a== true)
-        google.maps.event.addDomListener(window, 'load', initialize);
-    p(name = 'demo' id='demo')
-    
-    form(method="post" action="/" id="form" name='form')
-      input(class="form-control" name="userid" placeholder="userid" id="userid" value= user.id type="hidden")
-      input("latitude" class="form-control" name="latitude" placeholder="latitude" id="latitude" type="hidden")
-      input(class="form-control" name="longitude" placeholder="longitude" id="longitude" type="hidden")
-
-    button(id="record" onclick='iniciar()' name="record") add location
-    button(id="stop" onclick="parar()" name= "clear") show map
+        google.maps.event.addDomListener(window, 'load', initialize)
     
