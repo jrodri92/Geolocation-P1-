@@ -2,11 +2,21 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+
+var mongo = require('mongodb');
+var mongoose = require('mongoose');
+
 var logger = require('morgan');
 var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
 require('./passport/passport')(passport);
+
+
+
+//mongoose.connect('mongodb://mongo-server/Geolocation'); // servidor en produccion
+mongoose.connect('mongodb://localhost/Home'); //local
+var db = mongoose.connection;
 
 var indexRouter = require('./routes/routes');
 

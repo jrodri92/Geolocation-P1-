@@ -1,6 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
-var mysql = require('mysql');
 var bcrypt = require('bcryptjs');
+var User = require('../models/user');
 
 module.exports = function(passport){
 
@@ -12,36 +12,27 @@ module.exports = function(passport){
 		done(null, obj);
 	});
 
-	passport.use(new LocalStrategy({
-		passReqToCallback : true
-	}, function(req, email, password, done){
-
-		var config = require('.././database/config');
-		var db = mysql.createConnection(config);
-		db.connect();
-
-		db.query('SELECT * FROM users WHERE email = ?', email, function(err, rows, fields){
-			if(err) throw err;
-
-			db.end();
-
-			if(rows.length > 0){
-
-				var user = rows[0];
-				if(bcrypt.compareSync(password, user.password)){
-					return done(null, {
-						id: user.id, 
-						name : user.name,
-						email : user.email
-					});
+	passport.use(new LocalStrategy({ passReqToCallback : true},  
+		function(req, email, password, done){
+			User.getUserByUsername(email, function (err, user) {
+				if (err) throw err;
+				if (!user) {
+					return done(null, false, { message: 'Unknown User' });
 				}
-			}
-
-			return done(null, false, req.flash('automessage', 'Email o Password incorrecto.'));
-
-		});
-
-	}
-	));
+				User.comparePassword(password, user.password, function (err, isMatch) {
+					if (err) throw err;
+					if (isMatch) {
+						return done(null, {
+							id: user.id, 
+							name : user.name,
+							email : user.email
+						});
+					} else {
+						return done(null, false, { message: 'Invalid password' });
+					}
+				});
+			});
+		})
+	);
 
 };

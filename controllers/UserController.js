@@ -4,6 +4,7 @@ var express = require('express');
 var router = express.Router();
 var expressValidator = require('express-validator');
 
+var User = require('.././models/user');
 
 module.exports = {
   getSignUp : function(req,res,next){
@@ -12,26 +13,19 @@ module.exports = {
 
   postSignUp: function(req,res,next){
     
-    var salt = bcrypt.genSaltSync(10);
-    var password = bcrypt.hashSync(req.body.password, salt);
-    
-    var user = {
+    var user = new User({
       email : req.body.email,
       name : req.body.name,
-      password : password
-    };
-
-    var config = require('.././database/config');
-    var db = mysql.createConnection(config);
-    db.connect();
-
-    db.query('INSERT INTO users SET ?', user, function(err, rows, fields){
-      if(err) throw err;
-      db.end();
+      password : req.body.password
     });
+
+    User.createUser(user, function(err,user){
+      if(err) throw err;
+      console.log(user);
+    });
+
     req.flash('info','you have successfully registered');
     return res.render('users/logIn', {message: req.flash('info'), automessage: req.flash('automessage')});
-
   },
 
   getLogIn: function(req,res,next){
