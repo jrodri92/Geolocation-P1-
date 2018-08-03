@@ -1,4 +1,3 @@
-var mysql = require('mysql');
 var userc = require('.././controllers');
 
 var UserLocation = require('../models/location');
