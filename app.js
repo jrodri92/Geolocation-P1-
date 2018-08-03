@@ -14,7 +14,7 @@ require('./passport/passport')(passport);
 
 
 
-mongoose.connect('mongodb://mongo-server/Home'); // servidor en produccion
+mongoose.connect('mongodb://mongo-server/Geolocation'); // servidor en produccion
 //mongoose.connect('mongodb://localhost/Home'); //local
 var db = mongoose.connection;
 
